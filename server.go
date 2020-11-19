@@ -5,7 +5,15 @@ import (
 	"github.com/goagile/gin/books"
 )
 
+func init() {
+	gin.SetMode(gin.DebugMode)
+}
+
 func main() {
+	setupServer().Run()
+}
+
+func setupServer() *gin.Engine {
 	r := gin.Default()
 
 	// (C) CREATE
@@ -28,5 +36,5 @@ func main() {
 	// GET host:port/books?perpage=10&page=2
 	r.GET("/books", books.FindAll)
 
-	r.Run(":8080")
+	return r
 }

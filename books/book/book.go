@@ -21,7 +21,7 @@ type Book struct {
 }
 
 func (b *Book) String() string {
-	return fmt.Sprintf("Book(%v, %v)", b.Author, b.Title)
+	return fmt.Sprintf("Book(%v, %v, %v)", b.ID, b.Author, b.Title)
 }
 
 // ByID books sorter
