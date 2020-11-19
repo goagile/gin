@@ -1,9 +1,10 @@
 package db
 
 import (
+	"sort"
 	"sync"
 
-	"github.com/goagile/gin/book"
+	"github.com/goagile/gin/books/book"
 )
 
 var (
@@ -32,12 +33,20 @@ func FindAll() []*book.Book {
 		bs = append(bs, b)
 	}
 	dbMu.Unlock()
+	sort.Sort(book.ByID(bs))
 	return bs
 }
 
 // Find - find book by ID
 func Find(id int64) *book.Book {
 	return db[id]
+}
+
+// Delete - method delete book from storage
+func Delete(id int64) {
+	dbMu.Lock()
+	delete(db, id)
+	dbMu.Unlock()
 }
 
 // NextID - returns next books ID
