@@ -1,6 +1,9 @@
 package book
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
 // New - book constructor
 func New(id int64, title, author string) *Book {
@@ -17,11 +20,15 @@ type Book struct {
 	Author string `json:"author"`
 }
 
+func (b *Book) String() string {
+	return fmt.Sprintf("Book(%v, %v)", b.Author, b.Title)
+}
+
 // ByID books sorter
 type ByID []*Book
 
 func (s ByID) Less(i, j int) bool {
-	return (s[i].Title < s[j].Title)
+	return (s[i].ID < s[j].ID)
 }
 
 func (s ByID) Swap(i, j int) {

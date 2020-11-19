@@ -32,8 +32,14 @@ func FindAll() []*book.Book {
 	for _, b := range db {
 		bs = append(bs, b)
 	}
-	dbMu.Unlock()
 	sort.Sort(book.ByID(bs))
+	dbMu.Unlock()
+	return bs
+}
+
+// FindPerPage - find all books skip and limit result
+func FindPerPage(perpage, page int) []*book.Book {
+	bs := FindAll()
 	return bs
 }
 

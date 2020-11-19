@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/goagile/gin/books/book"
@@ -94,7 +95,30 @@ type UpdateRequest struct {
 
 // FindAll - return all books
 func FindAll(c *gin.Context) {
-	bs := db.FindAll()
+	perpage, err := strconv.ParseInt(c.DefaultQuery("perpage", "0"), 10, 32)
+	if err != nil {
+		log.Println("FindAll perpage", err)
+		c.JSON(
+			http.StatusBadRequest,
+			gin.H{"error": fmt.Sprintf("can't parse perpage param %q", perpage)},
+		)
+		return
+	}
+	page, err := strconv.ParseInt(c.DefaultQuery("page", "0"), 10, 32)
+	if err != nil {
+		log.Println("FindAll page", err)
+		c.JSON(
+			http.StatusBadRequest,
+			gin.H{"error": fmt.Sprintf("can't parse page param %q", page)},
+		)
+		return
+	}
+	var bs []*book.Book
+	if 0 == page && 0 == perpage {
+		bs = db.FindAll()
+	} else {
+		bs = db.FindPerPage(int(perpage), int(page))
+	}
 	c.JSON(http.StatusOK, gin.H{"data": bs})
 }
 

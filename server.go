@@ -8,11 +8,25 @@ import (
 func main() {
 	r := gin.Default()
 
-	r.POST("/books", books.Create)       // CREATE	(C)
-	r.GET("/books/:id", books.Find)      // READ	(R)
-	r.PUT("/books/:id", books.Update)    // UPDATE	(U)
-	r.DELETE("/books/:id", books.Delete) // DELETE	(D)
-	r.GET("/books", books.FindAll)       // LIST	(L)
+	// (C) CREATE
+	// POST host:port/books
+	r.POST("/books", books.Create)
+
+	// (R) READ
+	// GET host:port/books/32
+	r.GET("/books/:id", books.Find)
+
+	// (U) UPDATE
+	// PUT host:port/books/32
+	r.PUT("/books/:id", books.Update)
+
+	// (D) DELETE
+	// DELETE host:port/books/32
+	r.DELETE("/books/:id", books.Delete)
+
+	// (L) LIST
+	// GET host:port/books?perpage=10&page=2
+	r.GET("/books", books.FindAll)
 
 	r.Run(":8080")
 }
