@@ -66,13 +66,19 @@ type postRequest struct {
 }
 
 func dump(r *postRequest) *bytes.Reader {
-	j, _ := json.Marshal(r.Data)
+	j, err := json.Marshal(r.Data)
+	if err != nil {
+		log.Fatal("dump Marshal", err)
+	}
 	return bytes.NewReader(j)
 }
 
 func fromBody(r *http.Response) *postRequest {
 	var b *postRequest
-	byt, _ := ioutil.ReadAll(r.Body)
+	byt, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Fatal("fromBody ReadAll", err)
+	}
 	if err := json.Unmarshal(byt, &b); err != nil {
 		log.Fatal("Unmarshal", err)
 	}
