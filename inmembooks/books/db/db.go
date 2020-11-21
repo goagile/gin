@@ -4,7 +4,7 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/goagile/gin/books/book"
+	"github.com/goagile/gin/inmembooks/books/book"
 )
 
 var (

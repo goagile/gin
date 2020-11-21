@@ -7,8 +7,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/goagile/gin/books/book"
-	"github.com/goagile/gin/books/db"
+	"github.com/goagile/gin/inmembooks/books/book"
+	"github.com/goagile/gin/inmembooks/books/db"
 )
 
 // Create - create new book
